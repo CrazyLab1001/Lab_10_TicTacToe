@@ -12,26 +12,43 @@ public class TicTacToe {
         int col = 0;
         int moveCount = 0;
         boolean done = false;
+        boolean gameOver = false;
         String player = "";
         Scanner in = new Scanner(System.in);
-        clearBoard();
-        player = "X";
-        do { // game loop
-            do {
-                display();
-                System.out.println("What's your move, " + player + "?");
-                row = SafeInput.getRangedInt(in, "Enter row", 1, 3) - 1;
-                col = SafeInput.getRangedInt(in, "Enter col", 1, 3) - 1;
-            } while (!isValidMove(row, col)); // keeps loop if invalid move
-            board[row][col] = player;
-            moveCount++;
+        do { // program loop
+            clearBoard();
+            player = "X";
+            do { // game loop
+                do {
+                    display();
+                    System.out.println("What's your move, " + player + "?");
+                    row = SafeInput.getRangedInt(in, "Enter row", 1, 3) - 1;
+                    col = SafeInput.getRangedInt(in, "Enter col", 1, 3) - 1;
+                } while (!isValidMove(row, col)); // keeps loop if invalid move
+                board[row][col] = player;
+                moveCount++;
 
-            if (player == "X") {
-                player = "O";
-            } else {
-                player = "X";
-            }
+                if (moveCount > 4) {
+                    gameOver = isWin(player);
+                    if (gameOver == true) {
+                        display();
+                        System.out.println("Congrats, " + player + ", You win!"); }
+                }
+                if (moveCount > 6) {
+                    gameOver = isTie();
+                    if (gameOver == true) {
+                        display();
+                        System.out.println("Aw! It's a tie!"); }
+                }
+                if (player == "X") {
+                    player = "O";
+                } else {
+                    player = "X";
+                }
 
+            } while (!gameOver);
+
+                done = SafeInput.getYNConfirm(in, "Play again? [Y/N]");
         } while (!done);
 
     }
@@ -77,8 +94,9 @@ public class TicTacToe {
         for (int col = 0; col < COL; col++){
             if (board[col][0].equals(player) && board[col][1].equals(player) && board[col][2].equals(player)) {
                 return true;
-            }}}
-return false;
+            }
+        }
+return false; }
 
 
     private static boolean isRowWin(String player) { // checks rows for win
@@ -107,3 +125,7 @@ return false;
             }
         }
     return true;}
+
+
+
+}
