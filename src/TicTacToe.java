@@ -67,22 +67,43 @@ public class TicTacToe {
     }
 
     private static boolean isWin(String player) { // goes through all win classes to make sure all are false (or if one is true!)
-return false;
+        if (isColWin(player) || isDiagonalWin(player) || isRowWin(player)) {
+            return true;
+        }
+        return false;
     }
 
     private static boolean isColWin(String player) { // checks columns for win
+        for (int col = 0; col < COL; col++){
+            if (board[col][0].equals(player) && board[col][1].equals(player) && board[col][2].equals(player)) {
+                return true;
+            }}}
 return false;
-    }
+
 
     private static boolean isRowWin(String player) { // checks rows for win
+        for (int row = 0; row < ROW; row++){
+            if (board[row][0].equals(player) && board[row][1].equals(player) && board[row][2].equals(player)) {
+                return true;
+            }}
 return false;
     }
 
-    private static boolean isDiagnalWin (String player) { // checks for diagnal win (hard coded)
-return false;
-    }
+    private static boolean isDiagonalWin(String player) { // checks for diagnal win (hard coded)
+        if (board[0][0].equals(player) && board[1][1].equals(player) && board[2][2].equals(player)) {
+            return true;
+            }
+        if (board[0][2].equals(player) && board[1][1].equals(player) && board[2][0].equals(player)) {
+            return true;
+        }
+        return false;}
 
-    private static boolean isTie() { // checks for ties!
-return false;
-    }
-}
+
+    private static boolean isTie() {// checks for ties!
+        for (int row = 0; row < ROW; row++) {
+            for (int col = 0; col < COL; col++) {
+                if (board[row][col] == "X" || board[row][col] == "O")
+                return false;
+            }
+        }
+    return true;}
