@@ -5,7 +5,7 @@ public class TicTacToe {
 
     private static final int COL = 3;
 
-    private static String board [][] = new String[ROW][COL];
+    private static String board[][] = new String[ROW][COL];
 
     public static void main(String[] args) {
         int row = 0;
@@ -20,23 +20,20 @@ public class TicTacToe {
             do {
                 display();
                 System.out.println("What's your move, " + player + "?");
-                row = SafeInput.getRangedInt(in, "Enter row", 1, 3);
-                row--;
-                col = SafeInput.getRangedInt(in, "Enter col", 1, 3);
-                col--;
+                row = SafeInput.getRangedInt(in, "Enter row", 1, 3) - 1;
+                col = SafeInput.getRangedInt(in, "Enter col", 1, 3) - 1;
             } while (!isValidMove(row, col));
             board[row][col] = player;
             moveCount++;
 
             switch (player) { // toggle player
-                case "X":
-                    player = "O";
-                    break;
-                default:
+                case "O":
                     player = "X";
                     break;
+                default:
+                    player = "O";
+                    break;
             }
-
         } while (!stillPlaying);
 
     }
@@ -52,15 +49,13 @@ public class TicTacToe {
         }
     } }
 
-    private static void display()
-    { // shows game as it's played. :)
-            { for (int row = 0; row < ROW; row++) {
+    private static void display() { // shows game as it's played. :)
+             for (int row = 0; row < ROW; row++) {
                 System.out.print("| ");
                 for (int col = 0; col < COL; col++){
                     System.out.print(board[row][col] + " | "); }
 
                 System.out.println("");}
-    }
         }
 
 
