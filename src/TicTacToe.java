@@ -11,30 +11,28 @@ public class TicTacToe {
         int row = 0;
         int col = 0;
         int moveCount = 0;
-        boolean stillPlaying = true;
+        boolean done = false;
         String player = "";
         Scanner in = new Scanner(System.in);
         clearBoard();
         player = "X";
-        do {
+        do { // game loop
             do {
                 display();
                 System.out.println("What's your move, " + player + "?");
                 row = SafeInput.getRangedInt(in, "Enter row", 1, 3) - 1;
                 col = SafeInput.getRangedInt(in, "Enter col", 1, 3) - 1;
-            } while (!isValidMove(row, col));
+            } while (!isValidMove(row, col)); // keeps loop if invalid move
             board[row][col] = player;
             moveCount++;
 
-            switch (player) { // toggle player
-                case "O":
-                    player = "X";
-                    break;
-                default:
-                    player = "O";
-                    break;
+            if (player == "X") {
+                player = "O";
+            } else {
+                player = "X";
             }
-        } while (!stillPlaying);
+
+        } while (!done);
 
     }
 
@@ -61,11 +59,11 @@ public class TicTacToe {
 
 
         private static boolean isValidMove(int row, int col) { // this checks if a player is in the same spot as requested move
-        boolean areYouThere = false; // just a funny variable name to check if a player has already claimed that move
+        boolean isValidMove = true;
             if (board[row][col] == "X" || board[row][col] == "O") {
-                areYouThere = true;
+                isValidMove = false;
             }
-        return areYouThere;
+        return isValidMove;
     }
 
     private static boolean isWin(String player) { // goes through all win classes to make sure all are false (or if one is true!)
