@@ -7,22 +7,35 @@ public class TicTacToe {
 
     private static String board [][] = new String[ROW][COL];
 
-
     public static void main(String[] args) {
         int row = 0;
         int col = 0;
         int moveCount = 0;
         boolean stillPlaying = true;
-        String player = "X";
+        String player = "";
+        Scanner in = new Scanner(System.in);
+        clearBoard();
+        player = "X";
         do {
             do {
-                clearBoard();
                 display();
-                System.out.println("What's your move," + player + "?");
-                Scanner in = new Scanner(System.in);
+                System.out.println("What's your move, " + player + "?");
                 row = SafeInput.getRangedInt(in, "Enter row", 1, 3);
-                col = SafeInput.getRangedInt(in, "Enter row", 1, 3);
+                row--;
+                col = SafeInput.getRangedInt(in, "Enter col", 1, 3);
+                col--;
             } while (!isValidMove(row, col));
+            board[row][col] = player;
+            moveCount++;
+
+            switch (player) { // toggle player
+                case "X":
+                    player = "O";
+                    break;
+                default:
+                    player = "X";
+                    break;
+            }
 
         } while (!stillPlaying);
 
@@ -40,7 +53,7 @@ public class TicTacToe {
     } }
 
     private static void display()
-    { // shows game as it's played. :) (also is used as prompt for moves)
+    { // shows game as it's played. :)
             { for (int row = 0; row < ROW; row++) {
                 System.out.print("| ");
                 for (int col = 0; col < COL; col++){
@@ -50,8 +63,14 @@ public class TicTacToe {
     }
         }
 
+
+
         private static boolean isValidMove(int row, int col) { // this checks if a player is in the same spot as requested move
-        return false;
+        boolean areYouThere = false; // just a funny variable name to check if a player has already claimed that move
+            if (board[row][col] == "X" || board[row][col] == "O") {
+                areYouThere = true;
+            }
+        return areYouThere;
     }
 
     private static boolean isWin(String player) { // goes through all win classes to make sure all are false (or if one is true!)
